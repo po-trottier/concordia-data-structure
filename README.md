@@ -13,10 +13,12 @@ An optimized smart automobile registration class
     * Hash table 
     * Quick sort with hash table keys
     
-In both cases, pointer holds the same value type/structure (array-list of objects)
-
-___How do we store history?___ 
-
+In both cases, pointer holds the same value type/structure
+* ArrayList\<Objects\>
+* First element is the History (previous cars)
+    * History is populated every time an entry is removed
+    * The key is kept, then the value is moved inside the history object
+    * This will result in a recursive history object until it's empty  
 
 ### Methods:
 
