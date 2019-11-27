@@ -21,7 +21,7 @@ public class Main {
      SmartAR registration3 = new SmartAR(file3Content.length);
   }
 
-  static String[] readFile(String file) {
+  private static String[] readFile(String file) {
     var path = Paths.get("TestFiles", file);
     try {
       return Files.readString(path).split("\n");
