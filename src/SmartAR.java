@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import structures.HashMap;
 import structures.Sequence;
 
@@ -72,9 +74,9 @@ public class SmartAR {
     // TODO Remove an existing entry from the structure and add it to the history for that key
   }
 
-  public Object[] getValues(String key) {
+  public Pair[] getValues(String key) {
     // TODO Return the value for a given key
-    return new Object[0];
+    return new Pair[]{new Pair<>(null, null)};
   }
 
   public String nextKey(String key) {
@@ -87,8 +89,8 @@ public class SmartAR {
     return "Prev Key";
   }
 
-  public Object[] prevCars(String key) {
-    // TODO Return the history Object[] for the given key
-    return new Object[0];
+  public Pair[] prevCars(String key) {
+    // TODO Return the history Pair[] for the given key
+    return new Pair[]{new Pair<>(null, null)};
   }
 }
