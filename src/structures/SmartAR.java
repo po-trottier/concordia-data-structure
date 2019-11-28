@@ -1,3 +1,5 @@
+package structures;
+
 import javafx.util.Pair;
 
 import structures.HashMap;
@@ -6,7 +8,7 @@ import structures.Sequence;
 public class SmartAR {
   // Number of elements in the structure
   private int size;
-  // The threshold defining if the structure is large or not
+  // The threshold defining if the structure is large or not (Default = 50,000)
   private int threshold = 50000;
   // The flag to know if we need to use space-efficient or time-efficient algorithms
   private boolean isLarge;
@@ -15,11 +17,10 @@ public class SmartAR {
   // The structure used to store data in case the large flag is FALSE
   private Sequence sequence;
 
-  SmartAR(int size) {
+  public SmartAR(int size) {
     // Assign the initial values
     this.size = size;
     this.isLarge = this.size >= this.threshold;
-
     // Initialize the structure properly depending on the size
     if (isLarge) {
       map = new HashMap(this.size);
@@ -33,15 +34,12 @@ public class SmartAR {
   public void setThreshold(int threshold) {
     // Store the current value for isLarge
     boolean prevIsLarge = this.isLarge;
-
     // Set the threshold and update isLarge
     this.threshold = threshold;
     this.isLarge = this.size >= this.threshold;
-
     // If isLarge didn't changed, then job is done
     if(prevIsLarge == this.isLarge)
       return;
-
     // If isLarge changed, then migrate data to new structure
     if (this.isLarge) {
       this.map.migrate(this.sequence);
@@ -62,35 +60,66 @@ public class SmartAR {
   }
 
   public String[] allKeys() {
-    // TODO Return all the keys sorted Lexicographically
-    return new String[0];
+    if (isLarge) {
+      return map.allKeys();
+    } else {
+      return sequence.allKeys();
+    }
   }
 
-  public void add(String key, Object value) {
-    // TODO Add a new entry to the structure
+  public void add(String key, Pair<String, Object> value) {
+    if (isLarge) {
+      map.add(key, value);
+    } else {
+      sequence.add(key, value);
+    }
   }
 
   public void remove(String key) {
-    // TODO Remove an existing entry from the structure and add it to the history for that key
+    if (isLarge) {
+      map.remove(key);
+    } else {
+      sequence.remove(key);
+    }
   }
 
   public Pair[] getValues(String key) {
-    // TODO Return the value for a given key
-    return new Pair[]{new Pair<>(null, null)};
+    if (isLarge) {
+      return map.get(key);
+    } else {
+      return sequence.get(key);
+    }
+  }
+
+  public String firstKey() {
+    if (isLarge) {
+      return map.firstKey();
+    } else {
+      return sequence.firstKey();
+    }
   }
 
   public String nextKey(String key) {
-    // TODO Simply return the next key in the structure. Return null if no next key
-    return "Next Key";
+    if (isLarge) {
+      return map.nextKey(key);
+    } else {
+      return sequence.nextKey(key);
+    }
   }
 
   public String prevKey(String key) {
-    // TODO Simply return the previous key in the structure. Return null if no previous key
-    return "Prev Key";
+    if (isLarge) {
+      return map.prevKey(key);
+    } else {
+      return sequence.prevKey(key);
+    }
   }
 
   public Pair[] prevCars(String key) {
-    // TODO Return the history Pair[] for the given key
-    return new Pair[]{new Pair<>(null, null)};
+    if (isLarge) {
+      return map.history(key);
+    } else {
+      return sequence.history(key);
+    }
   }
 }

@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.util.Pair;
 
-public class HashMap {
+class HashMap {
   private LinkedHashMap<String, Pair[]> internalMap;
 
-  public HashMap(int size) {
+  HashMap(int size) {
     // Initialize the LinkedHashMap with the right size and a Load Factor of 1
     this.internalMap = new LinkedHashMap<>(size, 1);
   }
 
-  public void migrate(Sequence sequence) {
+  void migrate(Sequence sequence) {
     // Migrate all the data from the sequence to the map
     String[] keys = sequence.allKeys();
     for (String key : keys) {
@@ -23,11 +23,11 @@ public class HashMap {
     }
   }
 
-  public Pair[] get(String key) {
+  Pair[] get(String key) {
     return internalMap.get(key);
   }
 
-  public void add(String key, Pair<String, Object> value) {
+  void add(String key, Pair<String, Object> value) {
     if (internalMap.get(key) != null) {
       ArrayList<Pair> data = new ArrayList<>(Arrays.asList(internalMap.get(key)));
       data.add(value);
@@ -38,26 +38,52 @@ public class HashMap {
     }
   }
 
-  public void remove(String key) {
+  void remove(String key) {
 
   }
 
-  public String[] allKeys() {
+  Pair[] history(String key) {
+
+    return new Pair[0];
+  }
+
+  String[] allKeys() {
 
     return new String[0];
   }
 
-  public String nextKey(String key) {
-
-    return key;
+  String firstKey() {
+    return this.internalMap.keySet().toArray(new String[0])[0];
   }
 
-  public String prevKey(String key) {
-
-    return key;
+  String nextKey(String key) {
+    // This is not optimal but we don't have a choice with hash maps
+    var iter = this.internalMap.keySet().iterator();
+    // While the iterator has a next
+    while (iter.hasNext()) {
+      // Look to see if the key matches
+      if (iter.next().equals(key))
+        // If it does return the next one
+        return iter.next();
+    }
+    return null;
   }
 
-  public boolean isEmpty() {
+  String prevKey(String key) {
+    // This is not optimal but we don't have a choice with hash maps
+    var keys = this.internalMap.keySet().toArray(new String[0]);
+    // If the array of keys is empty element is the first one then return null
+    if (keys.length < 1 || keys[0].equals(key))
+      return null;
+    // Otherwise iterate until you find the key and return the previous one
+    for (int i = 1; i < keys.length; i++) {
+      if (keys[i].equals(key))
+        return keys[i - 1];
+    }
+    return null;
+  }
+
+  boolean isEmpty() {
     return this.internalMap.isEmpty();
   }
 }

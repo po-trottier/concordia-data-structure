@@ -1,33 +1,46 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import static tests.Tests.*;
+import static tests.Utils.*;
 
 public class Main {
-  static final String file1 = "ar_test_file1.txt";
-  static final String file2 = "ar_test_file2.txt";
-  static final String file3 = "ar_test_file3.txt";
-
   public static void main(String[] args) {
-    String[] file1Content = readFile(file1);
-    String[] file2Content = readFile(file2);
-    String[] file3Content = readFile(file3);
-    if (file1Content.length == 0 || file2Content.length == 0 || file3Content.length == 0) {
-      System.out.println("Something went wrong while reading the files");
-      return;
-    }
+    // STEP #1: Read the files
+    title("Reading Test Files");
+    readTestFiles();
 
-     SmartAR registration1 = new SmartAR(file1Content.length);
-     SmartAR registration2 = new SmartAR(file2Content.length);
-     SmartAR registration3 = new SmartAR(file3Content.length);
-  }
+    // STEP #2: Create and populate the SmartARs
+    title("Populating SmartARs");
+    createAndPopulate();
 
-  private static String[] readFile(String file) {
-    var path = Paths.get("TestFiles", file);
-    try {
-      return Files.readString(path).split("\n");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return new String[0];
+    // STEP #3: Display all the keys sorted Lexicographically
+    title("Displaying all Sorted Keys");
+    getAllSortedKeys();
+
+    // STEP #4: Remove a few items
+    title("Removing some elements");
+    removeSomeElements();
+
+    // STEP #5: Remove a few items
+    title("Adding back some element");
+    addRemovedElements();
+
+    // STEP #6: Remove a few items
+    title("Displaying \"new\" elements");
+    getRemovedElements();
+
+    // STEP #7: Remove a few items
+    title("Getting previous cars");
+    getPreviousCars();
+
+    // STEP #8: Iterate forward by getting the next key
+    title("Iterating Forward");
+    iterateForward();
+
+    // STEP #9: Iterate backwards by getting the previous key
+    title("Iterating Backwards");
+    iterateBackwards();
+
+    // STEP #10: Add new non-existing items (new keys)
+    title("Adding new unique items");
+    // TODO
   }
 }

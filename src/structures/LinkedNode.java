@@ -2,14 +2,16 @@ package structures;
 
 import javafx.util.Pair;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class LinkedNode {
   private String key;
-  private ArrayList<Pair<String, Object>> values = null;
+  private ArrayList<Pair<String, Object>> values;
   private LinkedNode next = null;
 
   LinkedNode(String key) {
     this.key = key;
+    values = new ArrayList<>();
   }
 
   String getKey() {
@@ -30,6 +32,11 @@ class LinkedNode {
   void setNext(LinkedNode next) {
     // Set the next element after the current node
     this.next = next;
+  }
+
+  void setValues(Pair<String, Object>[] newValues) {
+    // Add a value to the values ArrayList
+    this.values = new ArrayList<>(Arrays.asList(newValues));
   }
 
   void addValue(Pair<String, Object> newValue) {

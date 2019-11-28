@@ -3,14 +3,27 @@ package structures;
 import javafx.util.Pair;
 import java.util.ArrayList;
 
-public class Sequence {
+class Sequence {
   private LinkedNode head = null;
 
-  public void migrate(HashMap map) {
-    // TODO Iterate through every entry of the map and add a new LinkedNode for it
+  void migrate(HashMap map) {
+    // Migrate all the data from the HashMap to the sequence
+    LinkedNode iterator = null;
+    String[] keys = map.allKeys();
+    for (int i = 0; i < keys.length; i++) {
+      if (i == 0) {
+        iterator = new LinkedNode(keys[i]);
+        iterator.setValues(map.get(keys[i]));
+        this.head = iterator;
+      } else {
+        iterator.setNext(new LinkedNode(keys[i]));
+        iterator = iterator.getNext();
+        iterator.setValues(map.get(keys[i]));
+      }
+    }
   }
 
-  public Pair[] get(String key) {
+  Pair[] get(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
       return null;
@@ -25,7 +38,7 @@ public class Sequence {
     return iterator.getValues();
   }
 
-  public void add(String key, Pair<String, Object> value) {
+  void add(String key, Pair<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
       throw new RuntimeException("\"History\" is a reserved keyword. Please use another name.");
@@ -51,7 +64,7 @@ public class Sequence {
     iterator.setNext(newNode);
   }
 
-  public void remove(String key) {
+  void remove(String key) {
     // If we don't have a head then we can't remove anything
     if (this.head == null)
       return;
@@ -66,7 +79,27 @@ public class Sequence {
     iterator.remove();
   }
 
-  public String[] allKeys() {
+  Pair[] history(String key) {
+    // If we don't have a head then we can't remove anything
+    if (this.head == null)
+      return null;
+    // Iterate through every element until your find the right key
+    LinkedNode iterator = this.head;
+    while (!iterator.getKey().equals(key)) {
+      if (iterator.isLast())
+        return null;
+      iterator = iterator.getNext();
+    }
+    // Get the history for that key
+    for (Pair nvp : iterator.getValues()) {
+      if (nvp.getKey().equals("History"))
+        return (Pair[]) nvp.getValue();
+    }
+    // If there's no history return null
+    return null;
+  }
+
+  String[] allKeys() {
     // If we don't have a head then we can't return anything
     if (this.head == null)
       return null;
@@ -83,7 +116,11 @@ public class Sequence {
     return sortKeys(keys);
   }
 
-  public String nextKey(String key) {
+  String firstKey() {
+    return this.head.getKey();
+  }
+
+  String nextKey(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
       return null;
@@ -99,7 +136,7 @@ public class Sequence {
     return iterator.getNext().getKey();
   }
 
-  public String prevKey(String key) {
+  String prevKey(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
       return null;
@@ -120,7 +157,7 @@ public class Sequence {
     return lastIterator.getKey();
   }
 
-  public boolean isEmpty() {
+  boolean isEmpty() {
     // Return whether the sequence is empty or not
     return this.head.isEmpty() && this.head.isLast();
   }
@@ -167,6 +204,8 @@ public class Sequence {
   private boolean compareStrings(String a, String b) {
     // Returns true if string "a" is 'bigger' than string "b"
     for (int i = 0; i < a.length(); i++) {
+      if (i >= b.length())
+        return true;
       if (a.charAt(i) > b.charAt(i))
         return true;
       else if (a.charAt(i) < b.charAt(i))
