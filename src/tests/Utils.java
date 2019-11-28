@@ -38,7 +38,7 @@ public class Utils {
       // Add the new element to the structures.SmartAR with the value Name=Car<RANDOM>
       ar.add(elem, new Pair<>("Name", "Car" + random));
     }
-    System.out.println("SmartAR #" + i + " Contains " + content.length + " Entries");
+    System.out.println("SmartAR #" + i + " Contains " + ar.allKeys().length + " Entries");
   }
 
   static void getSortedKeys(SmartAR ar, int i) {
@@ -62,7 +62,7 @@ public class Utils {
     // Otherwise remove 100 elements and add their key to the removed ArrayList
     for (int i = 0; i < 100; i++) {
       // The elements are chosen randomly
-      removed.add(keys[new Random().nextInt(keys.length - 1)]);
+      removed.add(keys[new Random().nextInt(keys.length)]);
       ar.remove(removed.get(i));
     }
     return removed;
@@ -74,7 +74,7 @@ public class Utils {
       return;
     for (String element : elements) {
       // Generate a random number to append
-      int random = new Random().nextInt(9999);
+      int random = new Random().nextInt(10000);
       // Add the \"new\" element to the structures.SmartAR with the value Name=Truck<RANDOM>
       ar.add(element, new Pair<>("NewName", "Truck" + random));
     }
@@ -92,16 +92,8 @@ public class Utils {
     System.out.println("Car History #" + i + " Example:");
     if (elements == null || elements.size() < 1)
       System.out.println("[]");
-    else {
-      Pair[] values = ar.getValues(elements.get(0));
-      for (Pair value : values) {
-        if (value.getKey().equals("History")) {
-          System.out.println(value.getValue());
-          return;
-        }
-      }
-      System.out.println("[]");
-    }
+    else
+      System.out.println(Arrays.toString(ar.prevCars(elements.get(0))));
   }
 
   static void moveForward(SmartAR ar, int i) {
@@ -142,7 +134,7 @@ public class Utils {
     System.out.println("Adding 50 items to SmartAR #" + i);
     String[] newKeys = ar.generate(50);
     for (String key : newKeys) {
-      int random = new Random().nextInt(9999);
+      int random = new Random().nextInt(10000);
       ar.add(key, new Pair<>("UniqueCar", "UniqueCar" + random));
     }
     if (ar.getValues(newKeys[0]) == null)

@@ -1,9 +1,8 @@
 package structures;
 
 import javafx.util.Pair;
-
-import structures.HashMap;
-import structures.Sequence;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class SmartAR {
   // Number of elements in the structure
@@ -12,6 +11,8 @@ public class SmartAR {
   private int threshold = 50000;
   // The flag to know if we need to use space-efficient or time-efficient algorithms
   private boolean isLarge;
+  // The length of new generated keys
+  private int keyLength = 12;
   // The structure used to store data in case the large flag is TRUE
   private HashMap map;
   // The structure used to store data in case the large flag is FALSE
@@ -51,12 +52,28 @@ public class SmartAR {
   }
 
   public void setKeyLength(int length) {
-    // TODO.. Seems pretty useless though so Let's implement last if at all.
+    if (length < 6 || length > 12)
+      throw new RuntimeException("Key Length must be between 6 and 12 characters.");
+    this.keyLength = length;
   }
 
   public String[] generate(int n) {
-    // TODO Generate n unique, non-existing keys
-    return new String[n];
+    ArrayList<String> results = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      String generated = generateRandomString();
+      if (isLarge) {
+        while (map.contains(generated)) {
+          generated = generateRandomString();
+        }
+        results.add(generated);
+      } else {
+        while (sequence.contains(generated)) {
+          generated = generateRandomString();
+        }
+        results.add(generated);
+      }
+    }
+    return results.toArray(new String[0]);
   }
 
   public String[] allKeys() {
@@ -121,5 +138,15 @@ public class SmartAR {
     } else {
       return sequence.history(key);
     }
+  }
+
+  private String generateRandomString() {
+    final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < this.keyLength; i++) {
+      int random = new Random().nextInt(characters.length());
+      builder.append(characters.charAt(random));
+    }
+    return builder.toString();
   }
 }

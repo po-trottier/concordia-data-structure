@@ -38,6 +38,21 @@ class Sequence {
     return iterator.getValues();
   }
 
+  boolean contains(String key) {
+    // If we don't have a head then we surely don't have the key
+    if (this.head == null)
+      return false;
+    // Iterate through every element until your find the right key
+    LinkedNode iterator = this.head;
+    while (!iterator.getKey().equals(key)) {
+      if (iterator.isLast())
+        return false;
+      iterator = iterator.getNext();
+    }
+    // We found the key
+    return iterator.isEmpty();
+  }
+
   void add(String key, Pair<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
@@ -96,7 +111,7 @@ class Sequence {
     // Get the history for that key
     for (Pair nvp : iterator.getValues()) {
       if (nvp.getKey().equals("History"))
-        return (Pair[]) nvp.getValue();
+        return ((ArrayList<Pair>) nvp.getValue()).toArray(new Pair[0]);
     }
     // If there's no history return null
     return null;

@@ -8,95 +8,95 @@ import static tests.Utils.*;
 
 public class Tests {
   // Test Files
-  private static final String file1 = "ar_test_file1.txt";
-  private static final String file2 = "ar_test_file2.txt";
-  private static final String file3 = "ar_test_file3.txt";
+  private static final String FILE_1 = "ar_test_file1.txt";
+  private static final String FILE_2 = "ar_test_file2.txt";
+  private static final String FILE_3 = "ar_test_file3.txt";
   // Test Files Content
-  private static String[] file1Content;
-  private static String[] file2Content;
-  private static String[] file3Content;
+  private static String[] FILE_1_CONTENT;
+  private static String[] FILE_2_CONTENT;
+  private static String[] FILE_3_CONTENT;
   // SmartARs for Test Files
-  private static SmartAR registration1;
-  private static SmartAR registration2;
-  private static SmartAR registration3;
+  private static SmartAR AR_1;
+  private static SmartAR AR_2;
+  private static SmartAR AR_3;
   // Removed Elements
-  private static ArrayList<String> removedElements1;
-  private static ArrayList<String> removedElements2;
-  private static ArrayList<String> removedElements3;
+  private static ArrayList<String> REMOVED_1;
+  private static ArrayList<String> REMOVED_2;
+  private static ArrayList<String> REMOVED_3;
   
   public static void readTestFiles() {
     // Read the content of the test files
-    file1Content = readFile(file1);
-    file2Content = readFile(file2);
-    file3Content = readFile(file3);
+    FILE_1_CONTENT = readFile(FILE_1);
+    FILE_2_CONTENT = readFile(FILE_2);
+    FILE_3_CONTENT = readFile(FILE_3);
     System.out.println("Done");
     // If any of them is empty then something went wrong
-    if (file1Content.length == 0 || file2Content.length == 0 || file3Content.length == 0)
+    if (FILE_1_CONTENT.length == 0 || FILE_2_CONTENT.length == 0 || FILE_3_CONTENT.length == 0)
       System.out.println("Something went wrong while reading the files");
   }
 
   public static void createAndPopulate() {
     // Create a new structures.SmartAR for a Test File then populate it
-    registration1 = new SmartAR(file1Content.length);
-    populateAR(registration1, file1Content, 1);
-    registration2 = new SmartAR(file2Content.length);
-    populateAR(registration2, file2Content, 2);
-    registration3 = new SmartAR(file3Content.length);
-    populateAR(registration3, file3Content, 3);
+    AR_1 = new SmartAR(FILE_1_CONTENT.length);
+    populateAR(AR_1, FILE_1_CONTENT, 1);
+    AR_2 = new SmartAR(FILE_2_CONTENT.length);
+    populateAR(AR_2, FILE_2_CONTENT, 2);
+    AR_3 = new SmartAR(FILE_3_CONTENT.length);
+    populateAR(AR_3, FILE_3_CONTENT, 3);
   }
 
   public static void getAllSortedKeys() {
     // Debug Log to show the order in which the elements are returned
-    getSortedKeys(registration1, 1);
-    getSortedKeys(registration2, 2);
-    getSortedKeys(registration3, 3);
+    getSortedKeys(AR_1, 1);
+    getSortedKeys(AR_2, 2);
+    getSortedKeys(AR_3, 3);
   }
 
   public static void removeSomeElements() {
     // Removed 100 elements from the SmartARs
-    removedElements1 = removeRandom(registration1);
-    removedElements2 = removeRandom(registration2);
-    removedElements3 = removeRandom(registration3);
+    REMOVED_1 = removeRandom(AR_1);
+    REMOVED_2 = removeRandom(AR_2);
+    REMOVED_3 = removeRandom(AR_3);
     System.out.println("Done");
   }
 
   public static void addRemovedElements() {
     // Re-Added the 100 removed elements from the SmartARs
-    addElements(registration1, removedElements1);
-    addElements(registration2, removedElements2);
-    addElements(registration3, removedElements3);
+    addElements(AR_1, REMOVED_1);
+    addElements(AR_2, REMOVED_2);
+    addElements(AR_3, REMOVED_3);
     System.out.println("Done");
   }
 
   public static void getRemovedElements() {
     // Display 1 of the Re-Added elements for each structures.SmartAR
-    getRemoved(registration1, removedElements1, 1);
-    getRemoved(registration2, removedElements2, 2);
-    getRemoved(registration3, removedElements3, 3);
+    getRemoved(AR_1, REMOVED_1, 1);
+    getRemoved(AR_2, REMOVED_2, 2);
+    getRemoved(AR_3, REMOVED_3, 3);
   }
 
   public static void getPreviousCars() {
     // Display 1 of the removed car's history for each structures.SmartAR
-    getHistory(registration1, removedElements1, 1);
-    getHistory(registration2, removedElements2, 2);
-    getHistory(registration3, removedElements3, 3);
+    getHistory(AR_1, REMOVED_1, 1);
+    getHistory(AR_2, REMOVED_2, 2);
+    getHistory(AR_3, REMOVED_3, 3);
   }
 
   public static void iterateForward() {
-    moveForward(registration1, 1);
-    moveForward(registration2, 2);
-    moveForward(registration3, 3);
+    moveForward(AR_1, 1);
+    moveForward(AR_2, 2);
+    moveForward(AR_3, 3);
   }
 
   public static void iterateBackwards() {
-    moveBackwards(registration1, 1);
-    moveBackwards(registration2, 2);
-    moveBackwards(registration3, 3);
+    moveBackwards(AR_1, 1);
+    moveBackwards(AR_2, 2);
+    moveBackwards(AR_3, 3);
   }
 
   public static void addUniqueItems() {
-    addNewItems(registration1, 1);
-    addNewItems(registration2, 2);
-    addNewItems(registration3, 3);
+    addNewItems(AR_1, 1);
+    addNewItems(AR_2, 2);
+    addNewItems(AR_3, 3);
   }
 }

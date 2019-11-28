@@ -11,8 +11,9 @@ class HashMap {
   private LinkedHashMap<String, Pair[]> internalMap;
 
   HashMap(int size) {
-    // Initialize the LinkedHashMap with the right size and a Load Factor of 1
-    this.internalMap = new LinkedHashMap<>(size, 1);
+    // Initialize the LinkedHashMap with the right size
+    // and a Load Factor of 1 to minimize collisions
+    this.internalMap = new LinkedHashMap<>(size, 1f);
   }
 
   void migrate(Sequence sequence) {
@@ -24,19 +25,28 @@ class HashMap {
   }
 
   Pair[] get(String key) {
-    return internalMap.get(key);
+    return this.internalMap.get(key);
+  }
+
+  boolean contains(String key) {
+    if (this.internalMap.get(key) == null)
+      return false;
+    var isEmpty = this.internalMap.get(key).length == 0;
+    var isHistory = this.internalMap.get(key).length == 1
+                 && this.internalMap.get(key)[0].getKey().equals("History");
+    return !isEmpty && !isHistory;
   }
 
   void add(String key, Pair<String, Object> value) {
     if (key == null || key.isEmpty())
       return;
-    if (internalMap.get(key) != null) {
-      ArrayList<Pair> data = new ArrayList<>(Arrays.asList(internalMap.get(key)));
+    if (this.internalMap.get(key) != null) {
+      ArrayList<Pair> data = new ArrayList<>(Arrays.asList(this.internalMap.get(key)));
       data.add(value);
-      internalMap.remove(key);
-      internalMap.put(key, data.toArray(new Pair[0]));
+      this.internalMap.remove(key);
+      this.internalMap.put(key, data.toArray(new Pair[0]));
     } else {
-      internalMap.put(key, new Pair[] { value });
+      this.internalMap.put(key, new Pair[] { value });
     }
   }
 
@@ -50,8 +60,7 @@ class HashMap {
   }
 
   String[] allKeys() {
-
-    return new String[0];
+    return quickSort(this.internalMap.keySet().toArray(new String[0]));
   }
 
   String firstKey() {
@@ -87,5 +96,10 @@ class HashMap {
 
   boolean isEmpty() {
     return this.internalMap.isEmpty();
+  }
+
+  private String[] quickSort(String[] keys) {
+    // TODO Sort the keys
+    return keys;
   }
 }
