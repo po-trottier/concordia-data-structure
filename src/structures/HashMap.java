@@ -28,6 +28,8 @@ class HashMap {
   }
 
   void add(String key, Pair<String, Object> value) {
+    if (key == null || key.isEmpty())
+      return;
     if (internalMap.get(key) != null) {
       ArrayList<Pair> data = new ArrayList<>(Arrays.asList(internalMap.get(key)));
       data.add(value);

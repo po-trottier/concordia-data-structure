@@ -30,7 +30,7 @@ public class Utils {
     return new String[0];
   }
 
-  static void populateAR(SmartAR ar, String[] content) {
+  static void populateAR(SmartAR ar, String[] content, int i) {
     // For every Key in the File, add an element in the structures.SmartAR
     for (String elem : content) {
       // Generate a random number to append
@@ -38,14 +38,15 @@ public class Utils {
       // Add the new element to the structures.SmartAR with the value Name=Car<RANDOM>
       ar.add(elem, new Pair<>("Name", "Car" + random));
     }
+    System.out.println("SmartAR #" + i + " Contains " + content.length + " Entries");
   }
 
   static void getSortedKeys(SmartAR ar, int i) {
     System.out.println("Test File #" + i + " Keys:");
     String outString = Arrays.toString(ar.allKeys());
     // Print part of the sorted keys array
-    if (outString.length() > 70)
-      System.out.println(outString.substring(0, 60) + "...]");
+    if (outString.length() > 90)
+      System.out.println(outString.substring(0, 80) + "...]");
     else
       System.out.println(outString);
   }
@@ -135,5 +136,18 @@ public class Utils {
       System.out.print(j + "(" + value[value.length - 1] + (j == 0 ? ")\n" : "), "));
       key = ar.prevKey(key);
     }
+  }
+
+  static void addNewItems(SmartAR ar, int i) {
+    System.out.println("Adding 50 items to SmartAR #" + i);
+    String[] newKeys = ar.generate(50);
+    for (String key : newKeys) {
+      int random = new Random().nextInt(9999);
+      ar.add(key, new Pair<>("UniqueCar", "UniqueCar" + random));
+    }
+    if (ar.getValues(newKeys[0]) == null)
+      System.out.println("Something went wrong while generating unique keys...");
+    else
+      System.out.println(Arrays.toString(ar.getValues(newKeys[0])) + " and more...");
   }
 }

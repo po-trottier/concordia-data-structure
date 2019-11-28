@@ -42,6 +42,9 @@ class Sequence {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
       throw new RuntimeException("\"History\" is a reserved keyword. Please use another name.");
+    // If we pass an invalid key then return
+    if (key == null || key.isEmpty())
+      return;
     // If we don't have a head, create it
     if (this.head == null) {
       this.head = new LinkedNode(key);

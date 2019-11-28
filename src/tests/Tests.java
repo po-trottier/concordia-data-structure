@@ -38,12 +38,11 @@ public class Tests {
   public static void createAndPopulate() {
     // Create a new structures.SmartAR for a Test File then populate it
     registration1 = new SmartAR(file1Content.length);
-    populateAR(registration1, file1Content);
+    populateAR(registration1, file1Content, 1);
     registration2 = new SmartAR(file2Content.length);
-    populateAR(registration2, file2Content);
+    populateAR(registration2, file2Content, 2);
     registration3 = new SmartAR(file3Content.length);
-    populateAR(registration3, file3Content);
-    System.out.println("Done");
+    populateAR(registration3, file3Content, 3);
   }
 
   public static void getAllSortedKeys() {
@@ -93,5 +92,11 @@ public class Tests {
     moveBackwards(registration1, 1);
     moveBackwards(registration2, 2);
     moveBackwards(registration3, 3);
+  }
+
+  public static void addUniqueItems() {
+    addNewItems(registration1, 1);
+    addNewItems(registration2, 2);
+    addNewItems(registration3, 3);
   }
 }
