@@ -5,10 +5,10 @@ package structures;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javafx.util.Pair;
+import java.util.AbstractMap.SimpleEntry;
 
 class HashMap {
-  private LinkedHashMap<String, Pair[]> internalMap;
+  private LinkedHashMap<String, SimpleEntry[]> internalMap;
 
   HashMap(int size) {
     // Initialize the LinkedHashMap with the right size
@@ -24,7 +24,7 @@ class HashMap {
     }
   }
 
-  Pair[] get(String key) {
+  SimpleEntry[] get(String key) {
     // Return the entry for a given key
     return this.internalMap.get(key);
   }
@@ -40,7 +40,7 @@ class HashMap {
     return !isEmpty && !isHistory;
   }
 
-  void add(String key, Pair<String, Object> value) {
+  void add(String key, SimpleEntry<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
       throw new RuntimeException("\"History\" is a reserved keyword. Please use another name.");
@@ -49,13 +49,13 @@ class HashMap {
       return;
     // If we're not adding a new entry then append the last one
     if (this.internalMap.get(key) != null) {
-      ArrayList<Pair> data = new ArrayList<>(Arrays.asList(this.internalMap.get(key)));
+      ArrayList<SimpleEntry> data = new ArrayList<>(Arrays.asList(this.internalMap.get(key)));
       data.add(value);
       this.internalMap.remove(key);
-      this.internalMap.put(key, data.toArray(new Pair[0]));
+      this.internalMap.put(key, data.toArray(new SimpleEntry[0]));
     } else {
       // Simply store the desired data when it's a new entry
-      this.internalMap.put(key, new Pair[] { value });
+      this.internalMap.put(key, new SimpleEntry[] { value });
     }
   }
 
@@ -63,9 +63,9 @@ class HashMap {
     // TODO Move all values to History and then clear values + Comment
   }
 
-  Pair[] history(String key) {
+  SimpleEntry[] history(String key) {
     // TODO Return the History for an entry + Comment
-    return new Pair[0];
+    return new SimpleEntry[0];
   }
 
   String[] allKeys() {

@@ -1,13 +1,13 @@
 package tests;
 
-import javafx.util.Pair;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
+import java.util.AbstractMap.SimpleEntry;
 import structures.SmartAR;
 
 public class Utils {
@@ -36,7 +36,7 @@ public class Utils {
       // Generate a random number to append
       int random = new Random().nextInt(content.length * 2);
       // Add the new element to the structures.SmartAR with the value Name=Car<RANDOM>
-      ar.add(elem, new Pair<>("Name", "Car" + random));
+      ar.add(elem, new SimpleEntry<>("Name", "Car" + random));
     }
     System.out.println("SmartAR #" + i + " Contains " + ar.allKeys().length + " Entries");
   }
@@ -76,7 +76,7 @@ public class Utils {
       // Generate a random number to append
       int random = new Random().nextInt(10000);
       // Add the \"new\" element to the structures.SmartAR with the value Name=Truck<RANDOM>
-      ar.add(element, new Pair<>("NewName", "Truck" + random));
+      ar.add(element, new SimpleEntry<>("NewName", "Truck" + random));
     }
   }
 
@@ -135,7 +135,7 @@ public class Utils {
     String[] newKeys = ar.generate(50);
     for (String key : newKeys) {
       int random = new Random().nextInt(10000);
-      ar.add(key, new Pair<>("UniqueCar", "UniqueCar" + random));
+      ar.add(key, new SimpleEntry<>("UniqueCar", "UniqueCar" + random));
     }
     if (ar.getValues(newKeys[0]) == null)
       System.out.println("Something went wrong while generating unique keys...");

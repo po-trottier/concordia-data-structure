@@ -1,6 +1,6 @@
 package structures;
 
-import javafx.util.Pair;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -84,7 +84,7 @@ public class SmartAR {
     }
   }
 
-  public void add(String key, Pair<String, Object> value) {
+  public void add(String key, SimpleEntry<String, Object> value) {
     if (isLarge) {
       map.add(key, value);
     } else {
@@ -100,7 +100,7 @@ public class SmartAR {
     }
   }
 
-  public Pair[] getValues(String key) {
+  public SimpleEntry[] getValues(String key) {
     if (isLarge) {
       return map.get(key);
     } else {
@@ -132,7 +132,7 @@ public class SmartAR {
     }
   }
 
-  public Pair[] prevCars(String key) {
+  public SimpleEntry[] prevCars(String key) {
     if (isLarge) {
       return map.history(key);
     } else {

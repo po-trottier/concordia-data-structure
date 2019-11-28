@@ -1,6 +1,6 @@
 package structures;
 
-import javafx.util.Pair;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 
 class Sequence {
@@ -23,7 +23,7 @@ class Sequence {
     }
   }
 
-  Pair[] get(String key) {
+  SimpleEntry[] get(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
       return null;
@@ -53,7 +53,7 @@ class Sequence {
     return iterator.isEmpty();
   }
 
-  void add(String key, Pair<String, Object> value) {
+  void add(String key, SimpleEntry<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
       throw new RuntimeException("\"History\" is a reserved keyword. Please use another name.");
@@ -97,7 +97,7 @@ class Sequence {
     iterator.remove();
   }
 
-  Pair[] history(String key) {
+  SimpleEntry[] history(String key) {
     // If we don't have a head then we can't remove anything
     if (this.head == null)
       return null;
@@ -109,9 +109,9 @@ class Sequence {
       iterator = iterator.getNext();
     }
     // Get the history for that key
-    for (Pair nvp : iterator.getValues()) {
+    for (SimpleEntry nvp : iterator.getValues()) {
       if (nvp.getKey().equals("History"))
-        return ((ArrayList<Pair>) nvp.getValue()).toArray(new Pair[0]);
+        return ((ArrayList<SimpleEntry>) nvp.getValue()).toArray(new SimpleEntry[0]);
     }
     // If there's no history return null
     return null;

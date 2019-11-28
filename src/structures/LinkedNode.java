@@ -1,12 +1,12 @@
 package structures;
 
-import javafx.util.Pair;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 class LinkedNode {
   private String key;
-  private ArrayList<Pair<String, Object>> values;
+  private ArrayList<SimpleEntry<String, Object>> values;
   private LinkedNode next = null;
 
   LinkedNode(String key) {
@@ -19,9 +19,9 @@ class LinkedNode {
     return this.key;
   }
 
-  Pair[] getValues() {
+  SimpleEntry[] getValues() {
     // Get the values for the current node
-    return this.values.toArray(new Pair[0]);
+    return this.values.toArray(new SimpleEntry[0]);
   }
 
   LinkedNode getNext() {
@@ -34,12 +34,12 @@ class LinkedNode {
     this.next = next;
   }
 
-  void setValues(Pair<String, Object>[] newValues) {
+  void setValues(SimpleEntry<String, Object>[] newValues) {
     // Add a value to the values ArrayList
     this.values = new ArrayList<>(Arrays.asList(newValues));
   }
 
-  void addValue(Pair<String, Object> newValue) {
+  void addValue(SimpleEntry<String, Object> newValue) {
     // Add a value to the values ArrayList
     this.values.add(newValue);
   }
@@ -48,7 +48,7 @@ class LinkedNode {
     // "Remove" the noe by setting the History and clearing the rest of the values
     var prevValues = this.values;
     this.values = new ArrayList<>();
-    this.values.add(new Pair<>("History", prevValues));
+    this.values.add(new SimpleEntry<>("History", prevValues));
   }
 
   boolean isLast() {
