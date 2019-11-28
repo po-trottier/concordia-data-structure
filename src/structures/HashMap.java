@@ -25,45 +25,56 @@ class HashMap {
   }
 
   Pair[] get(String key) {
+    // Return the entry for a given key
     return this.internalMap.get(key);
   }
 
   boolean contains(String key) {
+    // If the entry is null then the map doesn't contain the key
     if (this.internalMap.get(key) == null)
       return false;
     var isEmpty = this.internalMap.get(key).length == 0;
     var isHistory = this.internalMap.get(key).length == 1
                  && this.internalMap.get(key)[0].getKey().equals("History");
+    // If the entry doesn't have values or only a history then it was removed
     return !isEmpty && !isHistory;
   }
 
   void add(String key, Pair<String, Object> value) {
+    // Reserve the "History" keyword for the program
+    if (value.getKey().equals("History"))
+      throw new RuntimeException("\"History\" is a reserved keyword. Please use another name.");
+    // If the key is null or empty then it's invalid
     if (key == null || key.isEmpty())
       return;
+    // If we're not adding a new entry then append the last one
     if (this.internalMap.get(key) != null) {
       ArrayList<Pair> data = new ArrayList<>(Arrays.asList(this.internalMap.get(key)));
       data.add(value);
       this.internalMap.remove(key);
       this.internalMap.put(key, data.toArray(new Pair[0]));
     } else {
+      // Simply store the desired data when it's a new entry
       this.internalMap.put(key, new Pair[] { value });
     }
   }
 
   void remove(String key) {
-
+    // TODO Move all values to History and then clear values + Comment
   }
 
   Pair[] history(String key) {
-
+    // TODO Return the History for an entry + Comment
     return new Pair[0];
   }
 
   String[] allKeys() {
+    // Return the list of all sorted keys
     return quickSort(this.internalMap.keySet().toArray(new String[0]));
   }
 
   String firstKey() {
+    // Return the first key in the map
     return this.internalMap.keySet().toArray(new String[0])[0];
   }
 
@@ -99,7 +110,7 @@ class HashMap {
   }
 
   private String[] quickSort(String[] keys) {
-    // TODO Sort the keys
+    // TODO Sort the keys + Comment
     return keys;
   }
 }
