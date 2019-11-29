@@ -64,8 +64,12 @@ class HashMap {
   }
 
   SimpleEntry[] history(String key) {
-    // TODO Return the History for an entry + Comment
-    return new SimpleEntry[0];
+    // Find the value with the "History" key
+    for (SimpleEntry nvp : this.internalMap.get(key)) {
+      if (nvp.getKey().equals("History"))
+        return ((ArrayList<SimpleEntry>) nvp.getValue()).toArray(new SimpleEntry[0]);
+    }
+    return null;
   }
 
   String[] allKeys() {
