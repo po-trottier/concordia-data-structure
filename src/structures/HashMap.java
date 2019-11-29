@@ -60,7 +60,13 @@ class HashMap {
   }
 
   void remove(String key) {
-    // TODO Move all values to History and then clear values + Comment
+
+    SimpleEntry[] value = this.internalMap.get(key);
+
+    this.internalMap.remove(key);
+
+    this.internalMap.put("History",value);
+
   }
 
   SimpleEntry[] history(String key) {
@@ -114,7 +120,11 @@ class HashMap {
   }
 
   private String[] quickSort(String[] keys) {
-    // TODO Sort the keys + Comment
+
+    String left = keys[1];
+    String right = keys[keys.length - 1];
+    String pivot = keys[0];
+
     return keys;
   }
 }
