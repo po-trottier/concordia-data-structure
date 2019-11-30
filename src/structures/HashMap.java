@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.Random;
 
 class HashMap {
   private LinkedHashMap<String, SimpleEntry[]> internalMap;
@@ -121,10 +122,55 @@ class HashMap {
 
   private String[] quickSort(String[] keys) {
 
-    String left = keys[1];
-    String right = keys[keys.length - 1];
-    String pivot = keys[0];
+    int left = 0;  //first element of list
+    int right = keys.length - 2; //before-last element of list
+    int pivot = keys.length - 1; //Last element of list
+
+    quickSortRecursive(keys, left, right);
 
     return keys;
   }
+
+  private void quickSortRecursive(String[] keys, int left, int right) {
+
+      String start = keys[left] ;
+      String end = keys[right] ;
+
+      if (compareStrings(end, start)) {
+          int partitionIndex = partition(keys, left, right);
+
+          quickSortRecursive(keys, left, partitionIndex - 1);
+          quickSortRecursive(keys, partitionIndex + 1, right);
+
+
+      }
+  }
+
+
+    private int partition(String keys[], int begin, int end) {
+
+        int partitionIndex = 0;
+
+        return partitionIndex;
+    }
+
+
+
+
+    private boolean compareStrings(String a, String b) {
+        // Returns true if string "a" is 'bigger' than string "b"
+        for (int i = 0; i < a.length(); i++) {
+            if (i >= b.length())
+                return true;
+            if (a.charAt(i) > b.charAt(i))
+                return true;
+            else if (a.charAt(i) < b.charAt(i))
+                return false;
+        }
+        return a.length() < b.length();
+    }
+
+   //
+
+
 }
