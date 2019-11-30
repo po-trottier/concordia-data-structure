@@ -2,11 +2,11 @@ package structures;
 
 // LinkedHashMap Documentation:
 // https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
-import java.util.LinkedHashMap;
+
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.Random;
+import java.util.LinkedHashMap;
 
 class HashMap {
   private LinkedHashMap<String, SimpleEntry[]> internalMap;
@@ -61,13 +61,9 @@ class HashMap {
   }
 
   void remove(String key) {
-
-    SimpleEntry[] value = this.internalMap.get(key);
-
+    SimpleEntry[] temp = this.internalMap.get(key);
     this.internalMap.remove(key);
-
-    this.internalMap.put("History",value);
-
+    this.internalMap.put("History",temp);
   }
 
   SimpleEntry[] history(String key) {
@@ -121,56 +117,71 @@ class HashMap {
   }
 
   private String[] quickSort(String[] keys) {
-
-    int left = 0;  //first element of list
-    int right = keys.length - 2; //before-last element of list
-    int pivot = keys.length - 1; //Last element of list
-
-    quickSortRecursive(keys, left, right);
-
-    return keys;
+    // Set the pivot to be the last element of list
+    String pivot = keys[keys.length - 1];
+    // Split the elements into left and right groups
+    ArrayList<String>[] values = split(keys, pivot);
+    // Return the sorted array
+    return quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
   }
 
-  private void quickSortRecursive(String[] keys, int left, int right) {
-
-      String start = keys[left] ;
-      String end = keys[right] ;
-
-      if (compareStrings(end, start)) {
-          int partitionIndex = partition(keys, left, right);
-
-          quickSortRecursive(keys, left, partitionIndex - 1);
-          quickSortRecursive(keys, partitionIndex + 1, right);
-
-
-      }
+  private String[] quickSortRecursive(String[] left, String[] right) {
+    String[] smaller = left;
+    String[] larger = right;
+    // If we're not at the leaves then sort the sub-tree
+    if (left.length > 1) {
+      String pivot = smaller[left.length - 1];
+      smaller = Arrays.copyOfRange(smaller, 0, left.length - 1);
+      ArrayList<String>[] values = split(smaller, pivot);
+      smaller = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
+    }
+    if (right.length > 1) {
+      String pivot = larger[larger.length - 1];
+      larger = Arrays.copyOfRange(larger, 0, left.length - 1);
+      ArrayList<String>[] values = split(larger, pivot);
+      larger = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
+    }
+    // Concatenate smaller and larger
+    String[] result = new String[smaller.length + larger.length];
+    int pos = 0;
+    for (String element : smaller) {
+      result[pos] = element;
+      pos++;
+    }
+    for (String element : larger) {
+      result[pos] = element;
+      pos++;
+    }
+    // Return the merged array
+    return result;
   }
 
-
-    private int partition(String keys[], int begin, int end) {
-
-        int partitionIndex = 0;
-
-        return partitionIndex;
+  private ArrayList<String>[] split(String[] keys, String pivot) {
+    // Elements smaller and larger than the pivot respectively
+    ArrayList<String> left = new ArrayList<>();
+    ArrayList<String> right = new ArrayList<>();
+    // Add the elements to the proper arrays;
+    for (int i = 0; i < keys.length; i++) {
+      if (i == keys.length - 1)
+        break;
+      if (compareStrings(keys[i], pivot))
+        right.add(keys[i]);
+      else
+        left.add(keys[i]);
     }
+    return new ArrayList[]{left, right};
+  }
 
-
-
-
-    private boolean compareStrings(String a, String b) {
-        // Returns true if string "a" is 'bigger' than string "b"
-        for (int i = 0; i < a.length(); i++) {
-            if (i >= b.length())
-                return true;
-            if (a.charAt(i) > b.charAt(i))
-                return true;
-            else if (a.charAt(i) < b.charAt(i))
-                return false;
-        }
-        return a.length() < b.length();
+  private boolean compareStrings(String a, String b) {
+    // Returns true if string "a" is 'bigger' than string "b"
+    for (int i = 0; i < a.length(); i++) {
+      if (i >= b.length())
+        return true;
+      if (a.charAt(i) > b.charAt(i))
+        return true;
+      else if (a.charAt(i) < b.charAt(i))
+        return false;
     }
-
-   //
-
-
+    return a.length() < b.length();
+  }
 }
