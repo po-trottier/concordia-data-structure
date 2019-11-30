@@ -33,10 +33,8 @@ public class Utils {
   static void populateAR(SmartAR ar, String[] content, int i) {
     // For every Key in the File, add an element in the structures.SmartAR
     for (String elem : content) {
-      // Generate a random number to append
-      int random = new Random().nextInt(content.length * 2);
-      // Add the new element to the structures.SmartAR with the value Name=Car<RANDOM>
-      ar.add(elem, new SimpleEntry<>("Name", "Car" + random));
+      // Add the new element to the structures.SmartAR with the value <KEY>
+      ar.add(elem, new SimpleEntry<>("Name", elem));
     }
     System.out.println("SmartAR #" + i + " Contains " + ar.allKeys().length + " Entries");
   }
