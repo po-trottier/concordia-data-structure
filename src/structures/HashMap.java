@@ -122,32 +122,34 @@ class HashMap {
     // Split the elements into left and right groups
     ArrayList<String>[] values = split(keys, pivot);
     // Return the sorted array
-    return quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
+    return quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]), pivot);
   }
 
-  private String[] quickSortRecursive(String[] left, String[] right) {
+  private String[] quickSortRecursive(String[] left, String[] right, String pivot) {
     String[] smaller = left;
     String[] larger = right;
     // If we're not at the leaves then sort the sub-tree
     if (left.length > 1) {
-      String pivot = smaller[left.length - 1];
-      smaller = Arrays.copyOfRange(smaller, 0, left.length - 1);
-      ArrayList<String>[] values = split(smaller, pivot);
-      smaller = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
+      String newPivot = smaller[left.length - 1];
+      smaller = Arrays.copyOfRange(smaller, 0, smaller.length - 1);
+      ArrayList<String>[] values = split(smaller, newPivot);
+      smaller = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]), newPivot);
     }
     if (right.length > 1) {
-      String pivot = larger[larger.length - 1];
-      larger = Arrays.copyOfRange(larger, 0, left.length - 1);
-      ArrayList<String>[] values = split(larger, pivot);
-      larger = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]));
+      String newPivot = larger[larger.length - 1];
+      larger = Arrays.copyOfRange(larger, 0, larger.length - 1);
+      ArrayList<String>[] values = split(larger, newPivot);
+      larger = quickSortRecursive(values[0].toArray(new String[0]), values[1].toArray(new String[0]), newPivot);
     }
     // Concatenate smaller and larger
-    String[] result = new String[smaller.length + larger.length];
+    String[] result = new String[smaller.length + larger.length + 1];
     int pos = 0;
     for (String element : smaller) {
       result[pos] = element;
       pos++;
     }
+    result[pos] = pivot;
+    pos++;
     for (String element : larger) {
       result[pos] = element;
       pos++;
