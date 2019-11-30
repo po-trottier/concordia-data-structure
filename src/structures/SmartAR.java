@@ -18,6 +18,7 @@ public class SmartAR {
   // The structure used to store data in case the large flag is FALSE
   private Sequence sequence;
 
+  //O(1)
   public SmartAR(int size) {
     // Assign the initial values
     this.size = size;
@@ -32,6 +33,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public void setThreshold(int threshold) {
     // Store the current value for isLarge
     boolean prevIsLarge = this.isLarge;
@@ -51,12 +53,14 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public void setKeyLength(int length) {
     if (length < 6 || length > 12)
       throw new RuntimeException("Key Length must be between 6 and 12 characters.");
     this.keyLength = length;
   }
 
+  //O(n^2)
   public String[] generate(int n) {
     ArrayList<String> results = new ArrayList<>();
     for (int i = 0; i < n; i++) {
@@ -76,6 +80,7 @@ public class SmartAR {
     return results.toArray(new String[0]);
   }
 
+  //O(1)
   public String[] allKeys() {
     if (isLarge) {
       return map.allKeys();
@@ -84,6 +89,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public void add(String key, SimpleEntry<String, Object> value) {
     if (isLarge) {
       map.add(key, value);
@@ -92,6 +98,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public void remove(String key) {
     if (isLarge) {
       map.remove(key);
@@ -100,6 +107,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public SimpleEntry[] getValues(String key) {
     if (isLarge) {
       return map.get(key);
@@ -108,6 +116,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public String firstKey() {
     if (isLarge) {
       return map.firstKey();
@@ -116,6 +125,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public String nextKey(String key) {
     if (isLarge) {
       return map.nextKey(key);
@@ -124,6 +134,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public String prevKey(String key) {
     if (isLarge) {
       return map.prevKey(key);
@@ -132,6 +143,7 @@ public class SmartAR {
     }
   }
 
+  //O(1)
   public SimpleEntry[] prevCars(String key) {
     if (isLarge) {
       return map.history(key);
@@ -140,6 +152,7 @@ public class SmartAR {
     }
   }
 
+  //O(n)
   private String generateRandomString() {
     final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     StringBuilder builder = new StringBuilder();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 class Sequence {
   private LinkedNode head = null;
 
+  //O(n)
   void migrate(HashMap map) {
     // Migrate all the data from the HashMap to the sequence
     LinkedNode iterator = null;
@@ -23,6 +24,7 @@ class Sequence {
     }
   }
 
+  //O(n)
   SimpleEntry[] get(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
@@ -38,6 +40,7 @@ class Sequence {
     return iterator.getValues();
   }
 
+  //O(n)
   boolean contains(String key) {
     // If we don't have a head then we surely don't have the key
     if (this.head == null)
@@ -53,6 +56,7 @@ class Sequence {
     return iterator.isEmpty();
   }
 
+  //O(n)
   void add(String key, SimpleEntry<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
@@ -82,6 +86,7 @@ class Sequence {
     iterator.setNext(newNode);
   }
 
+  //O(n)
   void remove(String key) {
     // If we don't have a head then we can't remove anything
     if (this.head == null)
@@ -97,6 +102,7 @@ class Sequence {
     iterator.remove();
   }
 
+  //O(n)
   SimpleEntry[] history(String key) {
     // If we don't have a head then we can't remove anything
     if (this.head == null)
@@ -117,6 +123,7 @@ class Sequence {
     return null;
   }
 
+  //O(n)
   String[] allKeys() {
     // If we don't have a head then we can't return anything
     if (this.head == null)
@@ -134,10 +141,12 @@ class Sequence {
     return sortKeys(keys);
   }
 
+  //O(1)
   String firstKey() {
     return this.head.getKey();
   }
 
+  //O(n)
   String nextKey(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
@@ -154,6 +163,7 @@ class Sequence {
     return iterator.getNext().getKey();
   }
 
+  //O(n)
   String prevKey(String key) {
     // If we don't have a head then we can't get anything
     if (this.head == null)
@@ -180,6 +190,7 @@ class Sequence {
     return this.head.isEmpty() && this.head.isLast();
   }
 
+  //O(nlogn)
   private String[] sortKeys(ArrayList<String> keys) {
     // Make the ArrayList a regular Array
     String[] sorted = keys.toArray(new String[0]);
@@ -196,6 +207,7 @@ class Sequence {
     return sorted;
   }
 
+  //O(1)
   private void heapify(String[] array, int heapSize, int i) {
     // Initialize largest as root
     int largest = i;
@@ -219,6 +231,7 @@ class Sequence {
     }
   }
 
+  //O(n)
   private boolean compareStrings(String a, String b) {
     // Returns true if string "a" is 'bigger' than string "b"
     for (int i = 0; i < a.length(); i++) {

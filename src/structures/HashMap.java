@@ -11,12 +11,14 @@ import java.util.LinkedHashMap;
 class HashMap {
   private LinkedHashMap<String, SimpleEntry[]> internalMap;
 
+  //O(1)
   HashMap(int size) {
     // Initialize the LinkedHashMap with the right size
     // and a Load Factor of 1 to minimize collisions
     this.internalMap = new LinkedHashMap<>(size, 1f);
   }
 
+  //O(n)
   void migrate(Sequence sequence) {
     // Migrate all the data from the sequence to the map
     String[] keys = sequence.allKeys();
@@ -25,11 +27,12 @@ class HashMap {
     }
   }
 
+    //O(1)
   SimpleEntry[] get(String key) {
     // Return the entry for a given key
     return this.internalMap.get(key);
   }
-
+    //O(1)
   boolean contains(String key) {
     // If the entry is null then the map doesn't contain the key
     if (this.internalMap.get(key) == null)
@@ -41,6 +44,7 @@ class HashMap {
     return !isEmpty && !isHistory;
   }
 
+    //O(1)
   void add(String key, SimpleEntry<String, Object> value) {
     // Reserve the "History" keyword for the program
     if (value.getKey().equals("History"))
@@ -60,12 +64,14 @@ class HashMap {
     }
   }
 
+    //O(1)
   void remove(String key) {
     SimpleEntry[] temp = this.internalMap.get(key);
     this.internalMap.remove(key);
     this.internalMap.put(key, new SimpleEntry[]{new SimpleEntry("History", temp)});
   }
 
+    //O(1)
   SimpleEntry[] history(String key) {
     // Find the value with the "History" key
     for (SimpleEntry nvp : this.internalMap.get(key)) {
@@ -75,16 +81,19 @@ class HashMap {
     return null;
   }
 
+    //O(nlogn)
   String[] allKeys() {
     // Return the list of all sorted keys
     return quickSort(this.internalMap.keySet().toArray(new String[0]));
   }
 
+    //O(1)
   String firstKey() {
     // Return the first key in the map
     return this.internalMap.keySet().toArray(new String[0])[0];
   }
 
+    //O(n)
   String nextKey(String key) {
     // This is not optimal but we don't have a choice with hash maps
     var iter = this.internalMap.keySet().iterator();
@@ -98,6 +107,7 @@ class HashMap {
     return null;
   }
 
+    //O(n)
   String prevKey(String key) {
     // This is not optimal but we don't have a choice with hash maps
     var keys = this.internalMap.keySet().toArray(new String[0]);
@@ -112,10 +122,12 @@ class HashMap {
     return null;
   }
 
+    //O(1)
   boolean isEmpty() {
     return this.internalMap.isEmpty();
   }
 
+    //O(nlogn)
   private String[] quickSort(String[] keys) {
     // Set the pivot to be the last element of list
     String pivot = keys[keys.length - 1];
@@ -174,6 +186,7 @@ class HashMap {
     return new ArrayList[]{left, right};
   }
 
+    //O(n)
   private boolean compareStrings(String a, String b) {
     // Returns true if string "a" is 'bigger' than string "b"
     for (int i = 0; i < a.length(); i++) {
