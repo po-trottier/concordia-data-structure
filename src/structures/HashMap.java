@@ -63,14 +63,14 @@ class HashMap {
   void remove(String key) {
     SimpleEntry[] temp = this.internalMap.get(key);
     this.internalMap.remove(key);
-    this.internalMap.put("History",temp);
+    this.internalMap.put(key, new SimpleEntry[]{new SimpleEntry("History", temp)});
   }
 
   SimpleEntry[] history(String key) {
     // Find the value with the "History" key
     for (SimpleEntry nvp : this.internalMap.get(key)) {
       if (nvp.getKey().equals("History"))
-        return ((ArrayList<SimpleEntry>) nvp.getValue()).toArray(new SimpleEntry[0]);
+        return ((SimpleEntry[]) nvp.getValue());
     }
     return null;
   }
